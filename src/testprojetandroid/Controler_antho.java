@@ -1,9 +1,7 @@
 package testprojetandroid;
 
-import java.sql.CallableStatement;
+
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -55,10 +53,10 @@ public class Controler_antho {
             System.out.println("            Menu NoteDB");
             System.out.println("===================================");
             System.out.println("1. Inserer une note");
-            System.out.println("2. Modifier un client par id");
-            System.out.println("3. Verifier les acces d'un client");
-            System.out.println("4. voir les infos d'un client");
-            System.out.println("5. Supprimer un client par id");
+            System.out.println("2. Modifier une note");
+            System.out.println("3. Verifier les acces d'une note");
+            System.out.println("4. voir les infos dune note");
+            System.out.println("5. Supprimer une note");
             System.out.println("6. Retour a l'accueil");
             System.out.println("Choix :");
             choix = Integer.parseInt(sc.nextLine());
