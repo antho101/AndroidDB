@@ -233,6 +233,35 @@ public class NoteDB  extends Note implements CRUD {
             }
         }
     }
+    
+    public static ArrayList<NoteDB> getCarnet(int var) throws Exception {
+        ArrayList<NoteDB> list = new ArrayList<>();
+        CallableStatement cstmt = null;
+        try {
+            boolean trouve = false;
+            String query1 = "select * from note where id_carnet = ?";
+            PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
+            pstm1.setInt(1, var);
+            ResultSet rs = pstm1.executeQuery();
+            while (rs.next()) {
+                trouve = true;
+                list.add(new NoteDB(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getInt(5), rs.getInt(6)));
+            }
+            if (!trouve) {
+                return null;
+            } else {
+                return list;
+            }
+        } catch (Exception e) {
+            throw new Exception("Erreur: " + e.getMessage());
+        } finally {//effectué dans tous les cas 
+            try {
+                cstmt.close();
+            } catch (Exception e) {
+            }
+        }
+
+    }
 
     @Override
     public void read() throws Exception {
