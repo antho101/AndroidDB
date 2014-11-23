@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/TestProjetAndroid/src/modele/User.java</file>
-            <file>file:/C:/wamp/www/TestProjetAndroid/src/testprojetandroid/TestProjetAndroid.java</file>
-            <file>file:/C:/wamp/www/TestProjetAndroid/src/testprojetandroid/Controler.java</file>
-            <file>file:/C:/wamp/www/TestProjetAndroid/src/modele/UserDB.java</file>
+            <file>file:/C:/Users/Anthony/Documents/NetBeansProjects/AndroidDB/src/modele/Note.java</file>
+            <file>file:/C:/Users/Anthony/Documents/NetBeansProjects/AndroidDB/src/testprojetandroid/Controler_antho.java</file>
+            <file>file:/C:/Users/Anthony/Documents/NetBeansProjects/AndroidDB/src/modele/NoteDB.java</file>
+            <file>file:/C:/Users/Anthony/Documents/NetBeansProjects/AndroidDB/src/modele/CategorieDB.java</file>
         </group>
     </open-files>
 </project-private>

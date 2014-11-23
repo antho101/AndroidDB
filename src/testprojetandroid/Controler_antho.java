@@ -1,9 +1,10 @@
 package testprojetandroid;
 
-
 import java.sql.Connection;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,62 +56,62 @@ public class Controler_antho {
             System.out.println("===================================");
             System.out.println("1. Inserer une note");
             System.out.println("2. Modifier une note");
-            System.out.println("3. Verifier les acces d'une note");
-            System.out.println("4. voir les infos dune note");
-            System.out.println("5. Supprimer une note");
-            System.out.println("6. Retour a l'accueil");
+            System.out.println("3. Supprimer une note");
+            System.out.println("4. Retour a l'accueil");
             System.out.println("Choix :");
             choix = Integer.parseInt(sc.nextLine());
             switch (choix) {
                 case 1:
-                    createUser();
+                    createNote();
                     break;
                 case 2:
-                    updateUser();
+                    updateNote();
                     break;
                 case 3:
-                    checkLoginUser();
+                    deleteNote();
                     break;
+
                 case 4:
-                    viewUser();
-                    break;
-                case 5:
-                    deleteUser();
-                    break;
-                case 6:
                     System.out.println("Retour a l'accueil");
                     break;
                 default:
                     System.out.println("Choix incorrecte");
             }
-        } while (choix != 6);
+        } while (choix != 4);
     }
 
-    public void createUser() {
-        String titreTmp="";
-        String contenuTmp="";
-        Date date_noteTmp="";
-        
-        String pseudoTmp = "";
-        String mailTmp = "";
-        String passwordTmp = "";
-        System.out.println("Pseudo :");
-        pseudoTmp = sc.nextLine();
-        System.out.println("Mail :");
-        mailTmp = sc.nextLine();
-        System.out.println("Password :");
-        passwordTmp = sc.nextLine();
-        UserDB.setConnection(con);
-        UserDB user = null;
-        user = new UserDB(pseudoTmp, mailTmp, passwordTmp);
+    public void createNote() {
+        String titreTmp = "";
+        String contenuTmp = "";
+        //Date date_noteTmp = null;
+        int id_carnetTmp = 0;
+        int id_categorieTmp = 0;
+
+        System.out.println("titre :");
+        titreTmp = sc.nextLine();
+        System.out.println("contenu :");
+        contenuTmp = sc.nextLine();
+
+        System.out.println("date :");
+        String date = sc.nextLine();
+        //String date = "2000-11-01";
+        java.sql.Date date_noteTmp = java.sql.Date.valueOf(date);
+
+        System.out.println("id_carnet :");
+        id_carnetTmp = Integer.parseInt(sc.nextLine());
+        System.out.println("id_categorie :");
+        id_categorieTmp = Integer.parseInt(sc.nextLine());
+        NoteDB.setConnection(con);
+        NoteDB note = null;
+        note = new NoteDB(titreTmp, contenuTmp, date_noteTmp, id_carnetTmp, id_categorieTmp);
         try {
-            user.create();
+            note.create();
         } catch (Exception ex) {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (user.getId_user() != -1) {//client trouvé
+        if (note.getId_note() != -1) {//client trouvé
             System.out.println("Object crée :");
-            System.out.println(user.toString());
+            System.out.println(note.toString());
         }
         try {
             Thread.sleep(1000);
@@ -119,35 +120,43 @@ public class Controler_antho {
         }
     }
 
-    public void updateUser() {
-        int id_userTmp = -1;
+    public void updateNote() {
+        int id_noteTmp = -1;
         System.out.println("ID :");
-        id_userTmp = Integer.parseInt(sc.nextLine());
-        UserDB.setConnection(con);
-        UserDB user = null;
-        user = new UserDB(id_userTmp);
+        id_noteTmp = Integer.parseInt(sc.nextLine());
+        NoteDB.setConnection(con);
+        NoteDB note = null;
+        note = new NoteDB(id_noteTmp);
         try {
-            user.read();
+            note.read();
         } catch (Exception ex) {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (user.getId_user() != -1) {//client trouvé
+        if (note.getId_note() != -1) {
             System.out.println("Object trouvé :");
-            System.out.println(user.toString());
-            String pseudoTmp = "";
-            String mailTmp = "";
-            String passwordTmp = "";
-            System.out.println("Nouveau pseudo(" + user.getPseudo() + ") :");
-            pseudoTmp = sc.nextLine();
-            System.out.println("Nouveau mail(" + user.getMail() + ") :");
-            mailTmp = sc.nextLine();
-            System.out.println("Nouveau password(" + user.getPassword() + ") :");
-            passwordTmp = sc.nextLine();
-            user.setPseudo(pseudoTmp);
-            user.setMail(mailTmp);
-            user.setPassword(passwordTmp);
+            System.out.println(note.toString());
+            String titreTmp = "";
+            String contenuTmp = "";
+            int id_categorieTmp = 0;
+            System.out.println("Nouveau titre(" + note.getTitre() + ") :");
+            titreTmp = sc.nextLine();
+            System.out.println("Nouveau contenu(" + note.getContenu() + ") :");
+            contenuTmp = sc.nextLine();
+
+            System.out.println("Nouvelle date(" + note.getDate_note() + ") :");
+
+            String date = sc.nextLine();
+            //String date = "2000-11-01";
+            java.sql.Date date_noteTmp = java.sql.Date.valueOf(date);
+
+            System.out.println("Nouvelle catégorie(" + note.getId_categorie() + ") :");
+            id_categorieTmp = Integer.parseInt(sc.nextLine());
+            note.setTitre(titreTmp);
+            note.setContenu(contenuTmp);
+            note.setDate_note(date_noteTmp);
+            note.setId_categorie(id_categorieTmp);
             try {
-                user.update();
+                note.update();
             } catch (Exception ex) {
                 Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -159,91 +168,29 @@ public class Controler_antho {
         }
     }
 
-    public void checkLoginUser() {
-        String pseudoTmp = "";
-        String passwordTmp = "";
-        System.out.println("Pseudo :");
-        pseudoTmp = sc.nextLine();
-        System.out.println("Password :");
-        passwordTmp = sc.nextLine();
-        UserDB.setConnection(con);
-        UserDB user = null;
-        user = new UserDB(pseudoTmp, passwordTmp);
-        try {
-            user.checkLogin();
-        } catch (Exception ex) {
-            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (user.getId_user() != -1) {//client trouvé
-            System.out.println("Object trouvé :");
-            System.out.println(user.toString());
-        }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void viewUser() {
-        int id_userTmp = -1;
+    public void deleteNote() {
+        int id_noteTmp = -1;
         System.out.println("ID :");
-        id_userTmp = Integer.parseInt(sc.nextLine());
-        ArrayList<CarnetDB> list = null;
-        UserDB.setConnection(con);
-        UserDB user = null;
-        user = new UserDB(id_userTmp);
+        id_noteTmp = Integer.parseInt(sc.nextLine());
+        NoteDB.setConnection(con);
+        NoteDB note = null;
+        note = new NoteDB(id_noteTmp);
         try {
-            user.read();
+            note.read();
         } catch (Exception ex) {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (user.getId_user() != -1) {//client trouvé
-            System.out.println("Object trouvé :");
-            try {
-                CarnetDB.setConnection(con);
-                list = CarnetDB.getUser(user.getId_user());
-            } catch (Exception ex) {
-                Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (list == null) {
-                System.out.println("Aucun carnet lié a ce compte");
-            } else {
-                user.setListCarnet(list);
-            }
-            System.out.println(user.toString());
-        }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void deleteUser() {
-        int id_userTmp = -1;
-        System.out.println("ID :");
-        id_userTmp = Integer.parseInt(sc.nextLine());
-        UserDB.setConnection(con);
-        UserDB user = null;
-        user = new UserDB(id_userTmp);
-        try {
-            user.read();
-        } catch (Exception ex) {
-            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (user.getId_user() != -1) {//client trouvé
+        if (note.getId_note() != -1) {//client trouvé
             String suppression = "";
             System.out.println("Object trouvé :");
-            System.out.println(user.toString());
+            System.out.println(note.toString());
             System.out.println("Supprimer cet object ?");
             do {
                 System.out.println("Choix(oui/non) :");
                 suppression = sc.nextLine();
                 if (suppression.equals("oui")) {
                     try {
-                        user.delete();
+                        note.delete();
                         System.out.println("Suppression réussis");
                     } catch (Exception ex) {
                         Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,57 +207,52 @@ public class Controler_antho {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     /*
      =======================================================
-     TEST UNITAIRE POUR LA CLASSE : CARNETDB
+     TEST UNITAIRE POUR LA CLASSE : CATEGORIEDB
      =======================================================
      */
-
     public void MenuCategorie() {
         do {
             System.out.println("===================================");
-            System.out.println("            Menu CARNETDB");
+            System.out.println("            Menu CATEGORIEDB");
             System.out.println("===================================");
-            System.out.println("1. Ajouter/créer un carnet a un client");
-            System.out.println("2. Modifier un carnet par id");
-            System.out.println("3. voir les infos d'un carnet");
-            System.out.println("4. Supprimer un carnet par id");
-            System.out.println("5. Retour a l'accueil");
+            System.out.println("1. Ajouter une catégorie");
+            System.out.println("2. Modifier une catégorie");
+            System.out.println("3. supprimer une catégorie");
+            System.out.println("4. Retour a l'accueil");
             System.out.println("Choix :");
             choix = Integer.parseInt(sc.nextLine());
             switch (choix) {
                 case 1:
-                    createCarnet();
+                    createCategorie();
                     break;
                 case 2:
-                    updateCarnet();
+                    updateCategorie();
                     break;
                 case 3:
-                    viewCarnet();
+                    deleteCategorie();
                     break;
                 case 4:
-                    deleteCarnet();
-                    break;
-                case 5:
                     System.out.println("Retour a l'accueil");
                     break;
+               
                 default:
                     System.out.println("Choix incorrecte");
             }
-        } while (choix != 5);
+        } while (choix != 4);
     }
 
-    private void createCarnet() {
-        int id_userTmp = -1;
-        System.out.println("ID du client :");
-        id_userTmp = Integer.parseInt(sc.nextLine());
-        UserDB.setConnection(con);
-        UserDB user = null;
-        user = new UserDB(id_userTmp);
+    private void createCategorie() {
+        int id_catTmp = -1;
+        System.out.println("ID de la catégorie :");
+        id_catTmp = Integer.parseInt(sc.nextLine());
+        CategorieDB.setConnection(con);
+        CategorieDB cat = null;
+        cat = new CategorieDB(id_catTmp);
         try {
-            user.read();
+            cat.read();
         } catch (Exception ex) {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -340,15 +282,12 @@ public class Controler_antho {
         }
     }
 
-    private void updateCarnet() {
+    private void updateCategorie() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void viewCarnet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    private void deleteCarnet() {
+    private void deleteCategorie() {
         int id_carnetTmp = -1;
         System.out.println("ID du carnet :");
         id_carnetTmp = Integer.parseInt(sc.nextLine());
