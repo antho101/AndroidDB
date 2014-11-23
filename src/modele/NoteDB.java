@@ -24,7 +24,6 @@ public class NoteDB extends Note implements CRUD {
         super();
     }
 
-
     public NoteDB(int id_note) {
         super(id_note);
     }
@@ -36,7 +35,6 @@ public class NoteDB extends Note implements CRUD {
     public NoteDB(int id_note, String titre, String contenu, Date date_note, int id_carnet, int id_categorie) {
         super(id_note, titre, contenu, date_note, id_carnet, id_categorie);
     }
-    
 
     public static void setConnection(Connection nouvdbConnect) {
         dbConnect = nouvdbConnect;
@@ -73,8 +71,6 @@ public class NoteDB extends Note implements CRUD {
         }
     }
 
-    
-
     public void read() throws Exception {
 
         CallableStatement cstmt = null;
@@ -105,6 +101,7 @@ public class NoteDB extends Note implements CRUD {
             }
         }
     }
+
     /**
      * mise � jour des donn�es de la chambre sur base de son numero
      *
@@ -198,6 +195,5 @@ public class NoteDB extends Note implements CRUD {
         }
 
     }
-
 
 }

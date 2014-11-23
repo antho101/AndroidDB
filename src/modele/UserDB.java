@@ -97,12 +97,6 @@ public class UserDB extends User implements CRUD {
             pstm1.setString(3, mail);
             pstm1.setString(4, password);
             int nl = pstm1.executeUpdate();
-            System.out.println("nl : " + nl);
-            if (nl > 0) {
-                System.out.println("Mise a jour réussis");
-            } else {
-                System.out.println("Mise a jour échouée");
-            }
         } catch (Exception e) {
             throw new Exception("Erreur: " + e.getMessage());
         } finally {//effectué dans tous les cas 

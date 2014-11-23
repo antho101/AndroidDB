@@ -19,6 +19,7 @@ public class TestProjetAndroid {
             System.out.println("1. alex");
             System.out.println("2. anthony");
             System.out.println("3. Quitter");
+            System.out.println("Choix :");
             choix = Integer.parseInt(sc.nextLine());
             if (choix == 1) {
                 Controler c1 = new Controler();

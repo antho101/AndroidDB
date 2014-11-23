@@ -7,7 +7,7 @@ class Carnet {
     protected int id_carnet;
     protected String titre;
     protected int id_user;
-    protected ArrayList<Note> listNote;
+    protected ArrayList<NoteDB> listNote;
 
     public Carnet() {
         this.id_carnet = -1;
@@ -15,6 +15,7 @@ class Carnet {
         this.id_user = -1;
         this.listNote = null;
     }
+
     public Carnet(int id_carnet) {
         this.id_carnet = id_carnet;
         this.titre = "";
@@ -29,14 +30,14 @@ class Carnet {
         this.listNote = null;
     }
 
-    public Carnet(String titre, int id_user, ArrayList<Note> listNote) {
+    public Carnet(String titre, int id_user, ArrayList<NoteDB> listNote) {
         this.id_carnet = -1;
         this.titre = titre;
         this.id_user = id_user;
         this.listNote = listNote;
     }
 
-    public Carnet(int id_carnet, String titre, int id_user, ArrayList<Note> listNote) {
+    public Carnet(int id_carnet, String titre, int id_user, ArrayList<NoteDB> listNote) {
         this.id_carnet = id_carnet;
         this.titre = titre;
         this.id_user = id_user;
@@ -55,7 +56,7 @@ class Carnet {
         return id_user;
     }
 
-    public ArrayList<Note> getListNote() {
+    public ArrayList<NoteDB> getListNote() {
         return listNote;
     }
 
@@ -71,8 +72,12 @@ class Carnet {
         this.id_user = id_user;
     }
 
-    public void setListNote(ArrayList<Note> listNote) {
+    public void setListNote(ArrayList<NoteDB> listNote) {
         this.listNote = listNote;
+    }
+
+    public void addNote(NoteDB obj) {
+        listNote.add(obj);
     }
 
     @Override

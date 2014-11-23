@@ -16,6 +16,9 @@ public class Controler {
     protected int choix = 0;
 
     public void Menu() {
+        UserDB.setConnection(con);
+        CarnetDB.setConnection(con);
+        NoteDB.setConnection(con);
         do {
             System.out.println("===================================");
             System.out.println("                Menu");
@@ -94,7 +97,6 @@ public class Controler {
         mailTmp = sc.nextLine();
         System.out.println("Password :");
         passwordTmp = sc.nextLine();
-        UserDB.setConnection(con);
         UserDB user = null;
         user = new UserDB(pseudoTmp, mailTmp, passwordTmp);
         try {
@@ -117,7 +119,6 @@ public class Controler {
         int id_userTmp = -1;
         System.out.println("ID :");
         id_userTmp = Integer.parseInt(sc.nextLine());
-        UserDB.setConnection(con);
         UserDB user = null;
         user = new UserDB(id_userTmp);
         try {
@@ -126,7 +127,27 @@ public class Controler {
             Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (user.getId_user() != -1) {//client trouvé
+            ArrayList<CarnetDB> list = null;
+            ArrayList<NoteDB> list2 = null;
             System.out.println("Object trouvé :");
+            try {
+                list = CarnetDB.getUser(user.getId_user());
+            } catch (Exception ex) {
+                Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (list == null) {
+                System.out.println("Aucun carnet lié a ce compte");
+            } else {
+                user.setListCarnet(list);
+                for (CarnetDB obj : user.getListCarnet()) {
+                    try {
+                        list2 = NoteDB.getCarnet(obj.getId_carnet());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    obj.setListNote(list2);
+                }
+            }
             System.out.println(user.toString());
             String pseudoTmp = "";
             String mailTmp = "";
@@ -145,6 +166,26 @@ public class Controler {
             } catch (Exception ex) {
                 Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
             }
+            try {
+                list = CarnetDB.getUser(user.getId_user());
+            } catch (Exception ex) {
+                Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (list == null) {
+                System.out.println("Aucun carnet lié a ce compte");
+            } else {
+                user.setListCarnet(list);
+                for (CarnetDB obj : user.getListCarnet()) {
+                    try {
+                        list2 = NoteDB.getCarnet(obj.getId_carnet());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    obj.setListNote(list2);
+
+                }
+            }
+            System.out.println(user.toString());
         }
         try {
             Thread.sleep(1000);
@@ -160,7 +201,6 @@ public class Controler {
         pseudoTmp = sc.nextLine();
         System.out.println("Password :");
         passwordTmp = sc.nextLine();
-        UserDB.setConnection(con);
         UserDB user = null;
         user = new UserDB(pseudoTmp, passwordTmp);
         try {
@@ -169,7 +209,28 @@ public class Controler {
             Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (user.getId_user() != -1) {//client trouvé
+            ArrayList<CarnetDB> list = null;
+            ArrayList<NoteDB> list2 = null;
             System.out.println("Object trouvé :");
+            try {
+                list = CarnetDB.getUser(user.getId_user());
+            } catch (Exception ex) {
+                Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (list == null) {
+                System.out.println("Aucun carnet lié a ce compte");
+            } else {
+                user.setListCarnet(list);
+                for (CarnetDB obj : user.getListCarnet()) {
+                    try {
+                        list2 = NoteDB.getCarnet(obj.getId_carnet());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    obj.setListNote(list2);
+
+                }
+            }
             System.out.println(user.toString());
         }
         try {
@@ -185,7 +246,7 @@ public class Controler {
         System.out.println("ID :");
         id_userTmp = Integer.parseInt(sc.nextLine());
         ArrayList<CarnetDB> list = null;
-        UserDB.setConnection(con);
+        ArrayList<NoteDB> list2 = null;
         UserDB user = null;
         user = new UserDB(id_userTmp);
         try {
@@ -196,7 +257,6 @@ public class Controler {
         if (user.getId_user() != -1) {//client trouvé
             System.out.println("Object trouvé :");
             try {
-                CarnetDB.setConnection(con);
                 list = CarnetDB.getUser(user.getId_user());
             } catch (Exception ex) {
                 Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
@@ -205,6 +265,15 @@ public class Controler {
                 System.out.println("Aucun carnet lié a ce compte");
             } else {
                 user.setListCarnet(list);
+                for (CarnetDB obj : user.getListCarnet()) {
+                    try {
+                        list2 = NoteDB.getCarnet(obj.getId_carnet());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    obj.setListNote(list2);
+
+                }
             }
             System.out.println(user.toString());
         }
@@ -219,7 +288,6 @@ public class Controler {
         int id_userTmp = -1;
         System.out.println("ID :");
         id_userTmp = Integer.parseInt(sc.nextLine());
-        UserDB.setConnection(con);
         UserDB user = null;
         user = new UserDB(id_userTmp);
         try {
@@ -298,7 +366,6 @@ public class Controler {
         int id_userTmp = -1;
         System.out.println("ID du client :");
         id_userTmp = Integer.parseInt(sc.nextLine());
-        UserDB.setConnection(con);
         UserDB user = null;
         user = new UserDB(id_userTmp);
         try {
@@ -312,7 +379,6 @@ public class Controler {
             System.out.println(user.toString());
             System.out.println("Titre du carnet :");
             titreTmp = sc.nextLine();
-            CarnetDB.setConnection(con);
             CarnetDB carnet = null;
             carnet = new CarnetDB(titreTmp, user.getId_user());
             try {
@@ -333,36 +399,44 @@ public class Controler {
     }
 
     private void updateCarnet() {
-        int id_userTmp = -1;
-        System.out.println("ID :");
-        id_userTmp = Integer.parseInt(sc.nextLine());
-        UserDB.setConnection(con);
-        UserDB user = null;
-        user = new UserDB(id_userTmp);
+        int id_carnetTmp = -1;
+        CarnetDB carnet = null;
+        ArrayList<NoteDB> list = null;
+        System.out.println("ID du carnet: ");
+        id_carnetTmp = Integer.parseInt(sc.nextLine());
+        carnet = new CarnetDB(id_carnetTmp);
         try {
-            user.read();
+            carnet.read();
+            list = NoteDB.getCarnet(carnet.getId_carnet());
+            carnet.setListNote(list);
         } catch (Exception ex) {
             Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (user.getId_user() != -1) {//client trouvé
+        if (carnet.getId_user() != -1) {//carnet trouvé
             System.out.println("Object trouvé :");
-            System.out.println(user.toString());
-            String pseudoTmp = "";
-            String mailTmp = "";
-            String passwordTmp = "";
-            System.out.println("Nouveau pseudo(" + user.getPseudo() + ") :");
-            pseudoTmp = sc.nextLine();
-            System.out.println("Nouveau mail(" + user.getMail() + ") :");
-            mailTmp = sc.nextLine();
-            System.out.println("Nouveau password(" + user.getPassword() + ") :");
-            passwordTmp = sc.nextLine();
-            user.setPseudo(pseudoTmp);
-            user.setMail(mailTmp);
-            user.setPassword(passwordTmp);
+            System.out.println(carnet.toString());
+            String titreTmp = "";
+            int id_userTmp = -1;
+            System.out.println("Nouveau titre(" + carnet.getTitre() + ") :");
+            titreTmp = sc.nextLine();
+            System.out.println("Nouveau id_user(" + carnet.getId_user() + ") :");
+            id_userTmp = Integer.parseInt(sc.nextLine());
+            carnet.setTitre(titreTmp);
+            carnet.setId_user(id_userTmp);
             try {
-                user.update();
+                carnet.update();
             } catch (Exception ex) {
                 Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                list = NoteDB.getCarnet(carnet.getId_carnet());
+            } catch (Exception ex) {
+                Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (list == null) {
+                System.out.println("Aucune note lié a ce carnet");
+            } else {
+                carnet.setListNote(list);
             }
         }
         try {
@@ -376,7 +450,7 @@ public class Controler {
         int id_carnetTmp = -1;
         System.out.println("ID du carnet :");
         id_carnetTmp = Integer.parseInt(sc.nextLine());
-        CarnetDB.setConnection(con);
+        ArrayList<NoteDB> list = null;
         CarnetDB carnet = null;
         carnet = new CarnetDB(id_carnetTmp);
         try {
@@ -386,12 +460,18 @@ public class Controler {
         }
         if (carnet.getId_user() != -1) {//carnet trouvé
             System.out.println("Object trouvé :");
+            try {
+                list = NoteDB.getCarnet(carnet.getId_carnet());
+            } catch (Exception ex) {
+                Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (list == null) {
+                System.out.println("Aucune note lié a ce carnet");
+            } else {
+                carnet.setListNote(list);
+            }
             System.out.println(carnet.toString());
-            /*
-            
-             la suite avec antho
-            
-             */
+
         }
         try {
             Thread.sleep(1000);
@@ -404,8 +484,8 @@ public class Controler {
         int id_carnetTmp = -1;
         System.out.println("ID du carnet :");
         id_carnetTmp = Integer.parseInt(sc.nextLine());
-        CarnetDB.setConnection(con);
         CarnetDB carnet = null;
+        ArrayList<NoteDB> list = null;
         carnet = new CarnetDB(id_carnetTmp);
         try {
             carnet.read();
@@ -415,6 +495,16 @@ public class Controler {
         if (carnet.getId_user() != -1) {//carnet trouvé
             String suppression = "";
             System.out.println("Object trouvé :");
+            try {
+                list = NoteDB.getCarnet(carnet.getId_carnet());
+            } catch (Exception ex) {
+                Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (list == null) {
+                System.out.println("Aucune note lié a ce carnet");
+            } else {
+                carnet.setListNote(list);
+            }
             System.out.println(carnet.toString());
             System.out.println("Supprimer cet object ?");
             do {
