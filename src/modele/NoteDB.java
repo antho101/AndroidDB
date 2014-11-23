@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modele;
 
 import java.sql.CallableStatement;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author Anthony
  */
-public class NoteDB  extends Note implements CRUD {
+public class NoteDB extends Note implements CRUD {
 
     protected static Connection dbConnect = null;
 
@@ -25,19 +24,6 @@ public class NoteDB  extends Note implements CRUD {
         super();
     }
 
-    public NoteDB(int id_note, String contenu, Date date_note, int id_carnet,
-            int id_categorie) {
-        super(id_note, contenu, date_note, id_carnet, id_categorie);
-    }
-
-    public NoteDB(int id_note, String titre, String contenu, Date date_note,
-            int id_carnet, int id_categorie) {
-        super(id_note, titre, contenu, date_note, id_carnet, id_categorie);
-    }
-
-    public NoteDB(int id_note) {
-        super(id_note);
-    }
 
     public static void setConnection(Connection nouvdbConnect) {
         dbConnect = nouvdbConnect;
@@ -206,7 +192,7 @@ public class NoteDB  extends Note implements CRUD {
             }
         }
     }
-    
+
     public static ArrayList<NoteDB> getCarnet(int var) throws Exception {
         ArrayList<NoteDB> list = new ArrayList<>();
         CallableStatement cstmt = null;
