@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 public class UserDB extends User implements CRUD {
 
     protected static Connection dbConnect = null;
-
+// ok
     public UserDB(int id_user) {
         super(id_user);
     }
