@@ -25,15 +25,16 @@ public class CarnetDB extends Carnet implements CRUD {
     public CarnetDB(int id_carnet) {
         super(id_carnet);
     }
+
     public CarnetDB(String titre, int id_user) {
         super(titre, id_user);
     }
 
-    public CarnetDB(String titre, int id_user, ArrayList<Note> listNote) {
+    public CarnetDB(String titre, int id_user, ArrayList<NoteDB> listNote) {
         super(titre, id_user, listNote);
     }
 
-    public CarnetDB(int id_carnet, String titre, int id_user, ArrayList<Note> listNote) {
+    public CarnetDB(int id_carnet, String titre, int id_user, ArrayList<NoteDB> listNote) {
         super(id_carnet, titre, id_user, listNote);
     }
 
@@ -105,12 +106,6 @@ public class CarnetDB extends Carnet implements CRUD {
             pstm1.setString(2, titre);
             pstm1.setInt(3, id_user);
             int nl = pstm1.executeUpdate();
-            System.out.println("nl : " + nl);
-            if (nl > 0) {
-                System.out.println("Mise a jour réussis");
-            } else {
-                System.out.println("Mise a jour échouée");
-            }
         } catch (Exception e) {
             throw new Exception("Erreur: " + e.getMessage());
         } finally {//effectué dans tous les cas 
