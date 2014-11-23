@@ -15,5 +15,4 @@ public class TestProjetAndroid {
         //Controler_antho c = new Controler_antho();
         c.Menu();
     }
-
 }
