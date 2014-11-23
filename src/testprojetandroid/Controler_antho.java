@@ -21,7 +21,7 @@ public class Controler_antho {
     public void Menu() {
         do {
             System.out.println("===================================");
-            System.out.println("                Menu2");
+            System.out.println("                Menu");
             System.out.println("===================================");
             System.out.println("1. NoteDB");
             System.out.println("2. CategorieDB");
@@ -55,9 +55,10 @@ public class Controler_antho {
             System.out.println("            Menu NoteDB");
             System.out.println("===================================");
             System.out.println("1. Inserer une note");
-            System.out.println("2. Modifier une note");
-            System.out.println("3. Supprimer une note");
-            System.out.println("4. Retour a l'accueil");
+            System.out.println("2. lire une note");
+            System.out.println("3. Modifier une note");
+            System.out.println("4. Supprimer une note");
+            System.out.println("5. Retour a l'accueil");
             System.out.println("Choix :");
             choix = Integer.parseInt(sc.nextLine());
             switch (choix) {
@@ -65,19 +66,21 @@ public class Controler_antho {
                     createNote();
                     break;
                 case 2:
-                    updateNote();
+                    lireNote();
                     break;
                 case 3:
+                    updateNote();
+                    break;
+                case 4:
                     deleteNote();
                     break;
-
-                case 4:
+                case 5:
                     System.out.println("Retour a l'accueil");
                     break;
                 default:
                     System.out.println("Choix incorrecte");
             }
-        } while (choix != 4);
+        } while (choix != 5);
     }
 
     public void createNote() {
@@ -117,6 +120,24 @@ public class Controler_antho {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void lireNote() {
+        int id_noteTmp = -1;
+        System.out.println("ID :");
+        id_noteTmp = Integer.parseInt(sc.nextLine());
+        NoteDB.setConnection(con);
+        NoteDB note = null;
+        note = new NoteDB(id_noteTmp);
+        try {
+            note.read();
+        } catch (Exception ex) {
+            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (note.getId_note() != -1) {
+            System.out.println("Object trouvé :");
+            System.out.println(note.toString());
         }
     }
 
@@ -219,9 +240,10 @@ public class Controler_antho {
             System.out.println("            Menu CATEGORIEDB");
             System.out.println("===================================");
             System.out.println("1. Ajouter une catégorie");
-            System.out.println("2. Modifier une catégorie");
-            System.out.println("3. supprimer une catégorie");
-            System.out.println("4. Retour a l'accueil");
+            System.out.println("2. Lire une catégorie");
+            System.out.println("3. Modifier une catégorie");
+            System.out.println("4. supprimer une catégorie");
+            System.out.println("5. Retour a l'accueil");
             System.out.println("Choix :");
             choix = Integer.parseInt(sc.nextLine());
             switch (choix) {
@@ -229,51 +251,64 @@ public class Controler_antho {
                     createCategorie();
                     break;
                 case 2:
-                    updateCategorie();
+                    lireCategorie();
                     break;
                 case 3:
-                    deleteCategorie();
+                    updateCategorie();
                     break;
                 case 4:
+                    deleteCategorie();
+                    break;
+                case 5:
                     System.out.println("Retour a l'accueil");
                     break;
-               
+
                 default:
                     System.out.println("Choix incorrecte");
             }
-        } while (choix != 4);
+        } while (choix != 5);
     }
 
     private void createCategorie() {
-        int id_catTmp = -1;
-        System.out.println("ID de la catégorie :");
-        id_catTmp = Integer.parseInt(sc.nextLine());
         CategorieDB.setConnection(con);
         CategorieDB cat = null;
-        cat = new CategorieDB(id_catTmp);
+        String labelTmp = "";
+        String couleurTmp = "";
+        System.out.println("Label de la categorie :");
+        labelTmp = sc.nextLine();
+        System.out.println("Couleur de la categorie :");
+        couleurTmp = sc.nextLine();
+        cat = new CategorieDB(labelTmp, couleurTmp);
+        try {
+            cat.create();
+        } catch (Exception ex) {
+            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (cat.getId_categorie() != -1) {
+            System.out.println("Object trouvé :");
+            System.out.println(cat.toString());
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void lireCategorie() {
+        int id_categorieTmp = -1;
+        System.out.println("ID :");
+        id_categorieTmp = Integer.parseInt(sc.nextLine());
+        CategorieDB.setConnection(con);
+        CategorieDB cat = null;
+        cat = new CategorieDB(id_categorieTmp);
         try {
             cat.read();
         } catch (Exception ex) {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (user.getId_user() != -1) {//client trouvé
-            String titreTmp = "";
-            System.out.println("Object trouvé :");
-            System.out.println(user.toString());
-            System.out.println("Titre du carnet :");
-            titreTmp = sc.nextLine();
-            CarnetDB.setConnection(con);
-            CarnetDB carnet = null;
-            carnet = new CarnetDB(titreTmp, user.getId_user());
-            try {
-                carnet.create();
-            } catch (Exception ex) {
-                Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (carnet.getId_carnet() != -1) {
-                System.out.println("Object trouvé :");
-                System.out.println(carnet.toString());
-            }
+        if (cat.getId_categorie() != -1) {//client trouvé
+            System.out.println(cat.toString());
         }
         try {
             Thread.sleep(1000);
@@ -283,36 +318,66 @@ public class Controler_antho {
     }
 
     private void updateCategorie() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-    private void deleteCategorie() {
-        int id_carnetTmp = -1;
-        System.out.println("ID du carnet :");
-        id_carnetTmp = Integer.parseInt(sc.nextLine());
-        CarnetDB.setConnection(con);
-        CarnetDB carnet = null;
-        carnet = new CarnetDB(id_carnetTmp);
+        int id_categorieTmp = -1;
+        System.out.println("ID :");
+        id_categorieTmp = Integer.parseInt(sc.nextLine());
+        CategorieDB.setConnection(con);
+        CategorieDB cat = null;
+        cat = new CategorieDB(id_categorieTmp);
         try {
-            carnet.read();
+            cat.read();
         } catch (Exception ex) {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (carnet.getId_user() != -1) {//client trouvé
+        if (cat.getId_categorie() != -1) {//client trouvé
+            String labelTmp = "";
+            String couleurTmp = "";
+            System.out.println("Nouveau label(" + cat.getLabel() + "): ");
+            labelTmp = sc.nextLine();
+            System.out.println("Nouvelle couleur(" + cat.getCouleur() + "): ");
+            couleurTmp = sc.nextLine();
+            cat.setLabel(labelTmp);
+            cat.setCouleur(couleurTmp);
+            try {
+                cat.update();
+            } catch (Exception ex) {
+                Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(cat.toString());
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void deleteCategorie() {
+        int id_categorieTmp = -1;
+        System.out.println("ID :");
+        id_categorieTmp = Integer.parseInt(sc.nextLine());
+        CategorieDB.setConnection(con);
+        CategorieDB cat = null;
+        cat = new CategorieDB(id_categorieTmp);
+        try {
+            cat.read();
+        } catch (Exception ex) {
+            Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (cat.getId_categorie() != -1) {//client trouvé
             String suppression = "";
             System.out.println("Object trouvé :");
-            System.out.println(carnet.toString());
+            System.out.println(cat.toString());
             System.out.println("Supprimer cet object ?");
             do {
                 System.out.println("Choix(oui/non) :");
                 suppression = sc.nextLine();
                 if (suppression.equals("oui")) {
                     try {
-                        carnet.delete();
+                        cat.delete();
                         System.out.println("Suppression réussis");
                     } catch (Exception ex) {
-                        Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 if (suppression.equals("non")) {
@@ -326,4 +391,5 @@ public class Controler_antho {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

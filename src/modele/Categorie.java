@@ -2,9 +2,19 @@ package modele;
 
 public class Categorie {
 
-    protected int id_categorie;
+    protected int id_categorie = -1;
     protected String label;
     protected String couleur;
+
+    public Categorie(int id_categorie) {
+        this.id_categorie = id_categorie;
+    }
+
+    public Categorie(String label, String couleur) {
+        this.id_categorie = id_categorie;
+        this.label = label;
+        this.couleur = couleur;
+    }
 
     public Categorie(int id_categorie, String label, String couleur) {
         this.id_categorie = id_categorie;

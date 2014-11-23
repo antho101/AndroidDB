@@ -89,6 +89,7 @@ public class NoteDB extends Note implements CRUD {
                 id_categorie = rs.getInt("ID_CATEGORIE");
             }
             if (!trouve) {
+                id_note = -1;
                 throw new Exception("numero inconnu dans la table !");
             }
         } catch (Exception e) {
@@ -101,16 +102,11 @@ public class NoteDB extends Note implements CRUD {
             }
         }
     }
-<<<<<<< HEAD
-    
-=======
 
     /**
-     * mise � jour des donn�es de la chambre sur base de son numero
      *
      * @throws Exception erreur de mise � jour
      */
->>>>>>> ac9b4a73f896e0764ab316fca56aa413c5c697df
     public void update() throws Exception {
         CallableStatement cstmt = null;
 
@@ -124,11 +120,6 @@ public class NoteDB extends Note implements CRUD {
             pstm1.setInt(5, id_carnet);
             pstm1.setInt(6, id_categorie);
             int nl = pstm1.executeUpdate();
-            if (nl > 1) {
-                System.out.println("La ligne a bien �t� mise a jour !");
-            } else {
-                System.out.println("Aucune ligne n'a �t� mise a jour !");
-            }
 
         } catch (Exception e) {
 
@@ -149,11 +140,6 @@ public class NoteDB extends Note implements CRUD {
             PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
             pstm1.setInt(1, id_note);
             int nl = pstm1.executeUpdate();
-            if (nl == 1) {
-                System.out.println("La ligne a bien �t� suprim� !");
-            } else {
-                System.out.println("Aucune ligne n'a �t� suprim� !");
-            }
 
         } catch (Exception e) {
 
