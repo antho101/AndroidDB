@@ -25,6 +25,19 @@ public class NoteDB extends Note implements CRUD {
     }
 
 
+    public NoteDB(int id_note) {
+        super(id_note);
+    }
+
+    public NoteDB(String titre, String contenu, Date date_note, int id_carnet, int id_categorie) {
+        super(titre, contenu, date_note, id_carnet, id_categorie);
+    }
+
+    public NoteDB(int id_note, String titre, String contenu, Date date_note, int id_carnet, int id_categorie) {
+        super(id_note, titre, contenu, date_note, id_carnet, id_categorie);
+    }
+    
+
     public static void setConnection(Connection nouvdbConnect) {
         dbConnect = nouvdbConnect;
     }
@@ -62,14 +75,14 @@ public class NoteDB extends Note implements CRUD {
 
     
 
-    public void read(int numeroTmp) throws Exception {
+    public void read() throws Exception {
 
         CallableStatement cstmt = null;
         try {
             boolean trouve = false;
             String query1 = "SELECT * FROM note WHERE id_note = ?";
             PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
-            pstm1.setInt(1, numeroTmp);
+            pstm1.setInt(1, id_note);
             ResultSet rs = pstm1.executeQuery();
             if (rs.next()) {
                 trouve = true;
@@ -92,42 +105,6 @@ public class NoteDB extends Note implements CRUD {
             }
         }
     }
-
-    public static ArrayList<NoteDB> rechNumero(String titre) throws Exception {
-        ArrayList<NoteDB> plusieurs = new ArrayList<NoteDB>();
-        CallableStatement cstmt = null;
-        try {
-            boolean trouve = false;
-            String query1 = "SELECT * FROM note WHERE titre = ?";
-            PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
-            pstm1.setString(2, titre);
-            ResultSet rs = pstm1.executeQuery();
-            if (rs.next()) {
-                trouve = true;
-                int id_noteTmp = rs.getInt("ID_NOTE");
-                String cotenuTmp = rs.getString("CONTENU");
-                Date DateTmp = rs.getDate("DATE_NOTE");
-                int id_carnetTmp = rs.getInt("ID_CARNET");
-                int id_categorieTmp = rs.getInt("ID_CATEGORIE");
-                plusieurs.add(new NoteDB(id_noteTmp, cotenuTmp, DateTmp, id_carnetTmp, id_categorieTmp));
-            }
-
-            if (!trouve) {
-                throw new Exception("nom inconnu");
-            } else {
-                return plusieurs;
-            }
-        } catch (Exception e) {
-
-            throw new Exception("maj echou�");
-        } finally {
-            try {
-                cstmt.close();
-            } catch (Exception e) {
-            }
-        }
-    }
-
     /**
      * mise � jour des donn�es de la chambre sur base de son numero
      *
@@ -222,9 +199,5 @@ public class NoteDB extends Note implements CRUD {
 
     }
 
-    @Override
-    public void read() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }
