@@ -3,6 +3,7 @@ package testprojetandroid;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,6 +87,10 @@ public class Controler_antho {
     }
 
     public void createUser() {
+        String titreTmp="";
+        String contenuTmp="";
+        Date date_noteTmp="";
+        
         String pseudoTmp = "";
         String mailTmp = "";
         String passwordTmp = "";

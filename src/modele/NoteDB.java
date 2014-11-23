@@ -74,34 +74,7 @@ public class NoteDB  extends Note implements CRUD {
         }
     }
 
-    public static ArrayList<NoteDB> read_all() throws Exception {
-        CallableStatement cstmt = null;
-        ArrayList<NoteDB> plusieurs = new ArrayList<NoteDB>();
-        try {
-            String query1 = "SELECT * FROM note where id_carnet= ?";
-            PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
-            ResultSet rs = pstm1.executeQuery();
-            while (rs.next()) {
-                int id_noteTmp = rs.getInt("ID_NOTE");
-                String titreTmp = rs.getString("TITRE");
-                String contenuTmp = rs.getString("CONTENU");
-                Date dateTmp = rs.getDate("DATE_NOTE");
-                int id_carnetTmp = rs.getInt("ID_CARNET");
-                int id_categorieTmp = rs.getInt("ID_CATEGORIE");
-                NoteDB temp = new NoteDB(id_noteTmp, titreTmp, contenuTmp, dateTmp, id_carnetTmp, id_categorieTmp);
-                plusieurs.add(temp);
-            }
-            return plusieurs;
-        } catch (Exception e) {
-
-            throw new Exception("Erreur de lecture " + e.getMessage());
-        } finally {
-            try {
-                cstmt.close();
-            } catch (Exception e) {
-            }
-        }
-    }
+    
 
     public void read(int numeroTmp) throws Exception {
 
