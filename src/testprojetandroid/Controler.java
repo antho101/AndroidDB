@@ -333,11 +333,71 @@ public class Controler {
     }
 
     private void updateCarnet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int id_userTmp = -1;
+        System.out.println("ID :");
+        id_userTmp = Integer.parseInt(sc.nextLine());
+        UserDB.setConnection(con);
+        UserDB user = null;
+        user = new UserDB(id_userTmp);
+        try {
+            user.read();
+        } catch (Exception ex) {
+            Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (user.getId_user() != -1) {//client trouvé
+            System.out.println("Object trouvé :");
+            System.out.println(user.toString());
+            String pseudoTmp = "";
+            String mailTmp = "";
+            String passwordTmp = "";
+            System.out.println("Nouveau pseudo(" + user.getPseudo() + ") :");
+            pseudoTmp = sc.nextLine();
+            System.out.println("Nouveau mail(" + user.getMail() + ") :");
+            mailTmp = sc.nextLine();
+            System.out.println("Nouveau password(" + user.getPassword() + ") :");
+            passwordTmp = sc.nextLine();
+            user.setPseudo(pseudoTmp);
+            user.setMail(mailTmp);
+            user.setPassword(passwordTmp);
+            try {
+                user.update();
+            } catch (Exception ex) {
+                Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void viewCarnet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int id_carnetTmp = -1;
+        System.out.println("ID du carnet :");
+        id_carnetTmp = Integer.parseInt(sc.nextLine());
+        CarnetDB.setConnection(con);
+        CarnetDB carnet = null;
+        carnet = new CarnetDB(id_carnetTmp);
+        try {
+            carnet.read();
+        } catch (Exception ex) {
+            Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (carnet.getId_user() != -1) {//carnet trouvé
+            System.out.println("Object trouvé :");
+            System.out.println(carnet.toString());
+            /*
+            
+             la suite avec antho
+            
+             */
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void deleteCarnet() {
@@ -352,7 +412,7 @@ public class Controler {
         } catch (Exception ex) {
             Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (carnet.getId_user() != -1) {//client trouvé
+        if (carnet.getId_user() != -1) {//carnet trouvé
             String suppression = "";
             System.out.println("Object trouvé :");
             System.out.println(carnet.toString());

@@ -1,5 +1,5 @@
 package modele;
-/*Antho Test*/
+
 import java.sql.Date;
 
 class Note {
@@ -11,31 +11,29 @@ class Note {
     protected int id_carnet;
     protected int id_categorie;
 
-    public Note(int id_note, String contenu, Date date_note, int id_carnet,int id_categorie) {
-		super();
-		this.id_note = id_note;
-		this.contenu = contenu;
-		this.date_note = date_note;
-		this.id_carnet = id_carnet;
-		this.id_categorie = id_categorie;
-	}
-	public Note(int id_note) {
-		super();
-		this.id_note = id_note;
-	}
-	public Note() {
-		super();
-	}
-	public Note(int id_note, String titre, String contenu, Date date_note,
-			int id_carnet, int id_categorie) {
-		super();
-		this.id_note = id_note;
-		this.titre = titre;
-		this.contenu = contenu;
-		this.date_note = date_note;
-		this.id_carnet = id_carnet;
-		this.id_categorie = id_categorie;
-	}
+    public Note() {
+    }
+
+    public Note(int id_note) {
+        this.id_note = id_note;
+    }
+
+    public Note(int id_note, String contenu, Date date_note, int id_carnet, int id_categorie) {
+        this.id_note = id_note;
+        this.contenu = contenu;
+        this.date_note = date_note;
+        this.id_carnet = id_carnet;
+        this.id_categorie = id_categorie;
+    }
+
+    public Note(int id_note, String titre, String contenu, Date date_note, int id_carnet, int id_categorie) {
+        this.id_note = id_note;
+        this.titre = titre;
+        this.contenu = contenu;
+        this.date_note = date_note;
+        this.id_carnet = id_carnet;
+        this.id_categorie = id_categorie;
+    }
 
     public int getId_note() {
         return id_note;
@@ -89,6 +87,5 @@ class Note {
     public String toString() {
         return "Note{" + "id_note=" + id_note + ", titre=" + titre + ", contenu=" + contenu + ", date_note=" + date_note + ", id_carnet=" + id_carnet + ", id_categorie=" + id_categorie + '}';
     }
-    
-    
+
 }

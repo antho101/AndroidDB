@@ -1,5 +1,5 @@
 package modele;
-/*test*/
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ public class UserDB extends User implements CRUD {
 
     protected static Connection dbConnect = null;
 // ok
+
     public UserDB(int id_user) {
         super(id_user);
     }
@@ -96,7 +97,7 @@ public class UserDB extends User implements CRUD {
             pstm1.setString(3, mail);
             pstm1.setString(4, password);
             int nl = pstm1.executeUpdate();
-            System.out.println("nl : "+nl);
+            System.out.println("nl : " + nl);
             if (nl > 0) {
                 System.out.println("Mise a jour réussis");
             } else {
