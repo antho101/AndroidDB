@@ -1,6 +1,9 @@
 package testprojetandroid;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -20,17 +23,17 @@ public class Controler_antho {
             System.out.println("===================================");
             System.out.println("                Menu2");
             System.out.println("===================================");
-            System.out.println("1. UserDB");
-            System.out.println("2. CarnetDB");
+            System.out.println("1. NoteDB");
+            System.out.println("2. CategorieDB");
             System.out.println("3. Quitter");
             System.out.println("Choix :");
             choix = Integer.parseInt(sc.nextLine());
             switch (choix) {
                 case 1:
-                    MenuUser();
+                    MenuNote();
                     break;
                 case 2:
-                    MenuCarnet();
+                    MenuCategorie();
                     break;
                 case 3:
                     System.out.println("Fin du programme.");
@@ -43,15 +46,15 @@ public class Controler_antho {
 
     /*
      =======================================================
-     TEST UNITAIRE POUR LA CLASSE : USERDB
+     TEST UNITAIRE POUR LA CLASSE : NoteDB
      =======================================================
      */
-    public void MenuUser() {
+    public void MenuNote() {
         do {
             System.out.println("===================================");
-            System.out.println("            Menu USERDB");
+            System.out.println("            Menu NoteDB");
             System.out.println("===================================");
-            System.out.println("1. Inserer un client");
+            System.out.println("1. Inserer une note");
             System.out.println("2. Modifier un client par id");
             System.out.println("3. Verifier les acces d'un client");
             System.out.println("4. voir les infos d'un client");
@@ -254,13 +257,15 @@ public class Controler_antho {
             Logger.getLogger(Controler_antho.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
     /*
      =======================================================
      TEST UNITAIRE POUR LA CLASSE : CARNETDB
      =======================================================
      */
 
-    public void MenuCarnet() {
+    public void MenuCategorie() {
         do {
             System.out.println("===================================");
             System.out.println("            Menu CARNETDB");
