@@ -97,6 +97,28 @@ public class CarnetDB extends Carnet implements CRUD {
 
     @Override
     public void update() throws Exception {
+        CallableStatement cstmt = null;
+        try {
+            String query1 = "call UpdateCarnet(?,?,?)";
+            PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
+            pstm1.setInt(1, id_carnet);
+            pstm1.setString(2, titre);
+            pstm1.setInt(3, id_user);
+            int nl = pstm1.executeUpdate();
+            System.out.println("nl : " + nl);
+            if (nl > 0) {
+                System.out.println("Mise a jour réussis");
+            } else {
+                System.out.println("Mise a jour échouée");
+            }
+        } catch (Exception e) {
+            throw new Exception("Erreur: " + e.getMessage());
+        } finally {//effectué dans tous les cas 
+            try {
+                cstmt.close();
+            } catch (Exception e) {
+            }
+        }
     }
 
     @Override
@@ -143,7 +165,6 @@ public class CarnetDB extends Carnet implements CRUD {
             } catch (Exception e) {
             }
         }
-
     }
 
 }
